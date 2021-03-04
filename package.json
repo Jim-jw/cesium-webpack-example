@@ -17,9 +17,17 @@
   "dependencies": {
     "cesium": "^1.63.1"
   },
+  "scripts": {
+    "build": "node_modules/.bin/webpack --config webpack.prod.config.js",
+    "start": "node_modules/.bin/webpack-dev-server --config webpack.dev.config.js",
+    "release": "node_modules/.bin/webpack --config webpack.release.config.js",
+    "serve-release": "node_modules/.bin/webpack-dev-server --config webpack.release.config.js --content-base /dist"
+  },
   "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.3",
     "css-loader": "^3.2.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
     "strip-pragma-loader": "^1.0.0",
     "style-loader": "^1.0.0",
@@ -27,12 +35,7 @@
     "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.9.0"
-  },
-  "scripts": {
-    "build": "node_modules/.bin/webpack --config webpack.config.js",
-    "start": "node_modules/.bin/webpack-dev-server --config webpack.config.js",
-    "release": "node_modules/.bin/webpack --config webpack.release.config.js",
-    "serve-release": "node_modules/.bin/webpack-dev-server --config webpack.release.config.js --content-base /dist"
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^5.7.3"
   }
 }

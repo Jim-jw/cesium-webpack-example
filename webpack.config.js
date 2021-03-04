@@ -3,9 +3,10 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-module.exports = [{
-    mode: 'development',
+module.exports = {
     context: __dirname,
     entry: {
         app: './src/index.js'
@@ -14,28 +15,29 @@ module.exports = [{
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist')
     },
-    devtool: 'eval',
     node: {
         // Resolve node module use of fs
-        fs: "empty",
+        fs: 'empty',
         Buffer: false,
-        http: "empty",
-        https: "empty",
-        zlib: "empty"
+        http: 'empty',
+        https: 'empty',
+        zlib: 'empty',
     },
     resolve: {
-        mainFields: ['module', 'main']
+        mainFields: ['module', 'main'],
     },
     module: {
         rules: [{
             test: /\.css$/,
-            use: ['style-loader', 'css-loader']
+            use: ['style-loader', 'css-loader'],
         }, {
             test: /\.(png|gif|jpg|jpeg|svg|xml|json)$/,
-            use: ['url-loader']
-        }]
+            use: ['url-loader'],
+        }],
     },
     plugins: [
+        new CleanWebpackPlugin(),
+        new FriendlyErrorsWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),
@@ -51,11 +53,6 @@ module.exports = [{
         new webpack.DefinePlugin({
             // Define relative base path in cesium for loading assets
             CESIUM_BASE_URL: JSON.stringify('')
-        })
+        }),
     ],
-
-    // development server options
-    devServer: {
-        contentBase: path.join(__dirname, "dist")
-    }
-}];
+};
